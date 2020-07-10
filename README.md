@@ -7,7 +7,7 @@
 [![versionjava](https://img.shields.io/badge/jdk-8,_9,_11-brightgreen.svg?logo=java)](https://github.com/spring-projects/spring-boot)
 [![versionvuejs](https://img.shields.io/badge/vue.js-2.6.10-brightgreen.svg?logo=vue.js)](https://vuejs.org/)
 [![versionvuecli](https://img.shields.io/badge/vue_CLI-3.9.1-brightgreen.svg?logo=vue.js)](https://cli.vuejs.org/)
-[![versionnodejs](https://img.shields.io/badge/nodejs-v12.6.0-brightgreen.svg?logo=node.js)](https://nodejs.org/en/)
+[![versionnodejs](https://img.shields.io/badge/nodejs-v11.10.1-brightgreen.svg?logo=node.js)](https://nodejs.org/en/)
 [![versionwebpack](https://img.shields.io/badge/webpack-4.28.4-brightgreen.svg?logo=webpack)](https://webpack.js.org/)
 [![versionaxios](https://img.shields.io/badge/axios-0.18.0-brightgreen.svg)](https://github.com/axios/axios)
 [![versionjest](https://img.shields.io/badge/jest-23.6.0-brightgreen.svg?logo=jest)](https://jestjs.io/)
@@ -598,7 +598,7 @@ Now you're able to use Spring Data's magic - all you need is an Interface like [
 ```java
 package de.jonashackt.springbootvuejs.repository;
 
-import de.jonashackt.springbootvuejs.domain.User;
+import User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -619,7 +619,7 @@ Now write your Testcases accordingly like [UserRepositoryTest.java](backend/src/
 ```java
 package de.jonashackt.springbootvuejs.repository;
 
-import de.jonashackt.springbootvuejs.domain.User;
+import User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

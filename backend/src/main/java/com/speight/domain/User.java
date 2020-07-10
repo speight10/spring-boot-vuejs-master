@@ -1,4 +1,4 @@
-package de.jonashackt.springbootvuejs.domain;
+package com.speight.domain;
 
 import javax.persistence.*;
 

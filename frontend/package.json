@@ -1,8 +1,8 @@
 {
   "name": "frontend",
   "version": "3.0.0",
-  "description": "A Vue.js & Spring Boot example project",
-  "author": "Jonas Hecht <jonas.hecht@codecentric.de>",
+  "description": "Starter project",
+  "author": "",
   "private": true,
   "scripts": {
     "clean": "rm -rf node_modules target",

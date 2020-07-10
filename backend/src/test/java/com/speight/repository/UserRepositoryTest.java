@@ -1,6 +1,6 @@
-package de.jonashackt.springbootvuejs.repository;
+package com.speight.repository;
 
-import de.jonashackt.springbootvuejs.domain.User;
+import com.speight.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,13 +1,22 @@
-package de.jonashackt.springbootvuejs.controller;
+package com.speight.controller;
 
-import de.jonashackt.springbootvuejs.domain.User;
-import de.jonashackt.springbootvuejs.exception.UserNotFoundException;
-import de.jonashackt.springbootvuejs.repository.UserRepository;
+import com.speight.domain.User;
+import com.speight.exception.UserNotFoundException;
+import com.speight.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController()
 @RequestMapping("/api")
@@ -23,6 +32,33 @@ public class BackendController {
 
     @RequestMapping(path = "/hello")
     public @ResponseBody String sayHello() {
+
+        LocalDate start = LocalDate.now();
+        LocalDate end = LocalDate.now().plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+
+
+
+
+
+
+        LocalDateTime Zstart= LocalDateTime.now();
+        LocalDateTime lastQuarter = Zstart.truncatedTo(ChronoUnit.HOURS)
+                .plusMinutes(((Zstart.getMinute() + 29) / 30) * 30);
+        LocalDateTime Zend= LocalDateTime.now().plusDays(5).with(TemporalAdjusters.lastDayOfMonth());
+
+        LocalDateTime date = LocalDateTime.of(2017,12,3,6,30);
+
+        List<LocalDateTime> zdates=Stream.iterate(Zstart, something -> something.plusMinutes(30))
+                .limit(ChronoUnit.DAYS.between(Zstart,Zend)*24).
+                 filter(test ->test.getDayOfWeek()!= DayOfWeek.FRIDAY).collect(Collectors.toList());
+
+
+
+        List<LocalDate> dates = Stream.iterate(start, test -> test.plusDays(1))
+                .limit(ChronoUnit.DAYS.between(start, end))
+                .collect(Collectors.toList());
+
+
         LOG.info("GET called on /hello resource");
         return HELLO_TEXT;
     }
