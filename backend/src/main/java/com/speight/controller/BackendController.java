@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,20 +41,33 @@ public class BackendController {
         LocalDate end = LocalDate.now().plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
 
 
+        ArrayList<DayOfWeek> daysOff= new ArrayList<>();
+        daysOff.add(DayOfWeek.valueOf("FRIDAY"));
+        daysOff.add(DayOfWeek.valueOf("MONDAY"));
+        daysOff.add(DayOfWeek.valueOf("SATURDAY"));
+        daysOff.add(DayOfWeek.valueOf("SUNDAY"));
+
+
+       /* String dateInString = "Fri";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE");
+        LocalDate dateTime = LocalDate.parse(dateInString, formatter);
+*/
 
 
 
+        LocalDateTime now= LocalDateTime.now();
+        
+        System.out.println(now.getDayOfWeek());
 
-        LocalDateTime Zstart= LocalDateTime.now();
-        LocalDateTime lastQuarter = Zstart.truncatedTo(ChronoUnit.HOURS)
-                .plusMinutes(((Zstart.getMinute() + 29) / 30) * 30);
+        LocalDateTime startTime = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS)
+                .plusMinutes(((now.getMinute() + 29) / 30) * 30);
         LocalDateTime Zend= LocalDateTime.now().plusDays(5).with(TemporalAdjusters.lastDayOfMonth());
 
-        LocalDateTime date = LocalDateTime.of(2017,12,3,6,30);
 
-        List<LocalDateTime> zdates=Stream.iterate(Zstart, something -> something.plusMinutes(30))
-                .limit(ChronoUnit.DAYS.between(Zstart,Zend)*24).
-                 filter(test ->test.getDayOfWeek()!= DayOfWeek.FRIDAY).collect(Collectors.toList());
+        List<LocalDateTime> zdates=Stream.iterate(startTime, nextValue -> nextValue.plusMinutes(30))
+                .limit(ChronoUnit.DAYS.between(startTime,Zend)*24).
+                 filter(test ->!daysOff.contains(test.getDayOfWeek())).
+                        collect(Collectors.toList());
 
 
 
@@ -62,6 +79,10 @@ public class BackendController {
         LOG.info("GET called on /hello resource");
         return HELLO_TEXT;
     }
+
+
+
+
 
     @RequestMapping(path = "/user/{lastName}/{firstName}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
