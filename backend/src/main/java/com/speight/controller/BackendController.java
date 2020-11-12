@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,16 +58,19 @@ public class BackendController {
 
 
         LocalDateTime now= LocalDateTime.now();
-        
+
         System.out.println(now.getDayOfWeek());
 
         LocalDateTime startTime = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS)
                 .plusMinutes(((now.getMinute() + 29) / 30) * 30);
-        LocalDateTime Zend= LocalDateTime.now().plusDays(5).with(TemporalAdjusters.lastDayOfMonth());
 
+        DateTimeFormatter dateFormat2 =  DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a");
+       String newtime=startTime.format(dateFormat2);
+        LocalDateTime Zend= LocalDateTime.now().plusDays(5).with(TemporalAdjusters.lastDayOfMonth());
+        Zend.format(dateFormat2);
 
         List<LocalDateTime> zdates=Stream.iterate(startTime, nextValue -> nextValue.plusMinutes(30))
-                .limit(ChronoUnit.DAYS.between(startTime,Zend)*24).
+                .limit(ChronoUnit.DAYS.between(startTime,Zend)*48).
                  filter(test ->!daysOff.contains(test.getDayOfWeek())).
                         collect(Collectors.toList());
 
